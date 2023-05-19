@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Student {
+  constructor(name, rollNumber) {
+    this.name = name;
+    this.rollNumber = rollNumber;
+    this.grades = {};
+  }
+
+  addGrade(subject, grade) {
+    this.grades[subject] = grade;
+  }
+
+  getAverageGrade() {
+    const totalGrades = Object.values(this.grades).reduce((sum, grade) => sum + grade, 0);
+    const averageGrade = totalGrades / Object.keys(this.grades).length;
+    return averageGrade;
+  }
+}
+
+class StudentPortal {
+  constructor() {
+    this.students = {};
+  }
+
+  addStudent(student) {
+    this.students[student.rollNumber] = student;
+  }
+
+  getStudent(rollNumber) {
+    return this.students[rollNumber];
+  }
+}
+
+// Example usage:
+const portal = new StudentPortal();
+
+const student1 = new Student("John Doe", "A001");
+student1.addGrade("Math", 90);
+student1.addGrade("English", 85);
+portal.addStudent(student1);
+
+const student2 = new Student("Jane Smith", "A002");
+student2.addGrade("Math", 95);
+student2.addGrade("English", 92);
+portal.addStudent(student2);
+
+console.log(portal.getStudent("A001")); 
+console.log(student1.getAverageGrade()); 
+
+    </script>
+</body>
+</html>
