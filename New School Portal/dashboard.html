@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style>
+    #ani {
+        animation-duration: 1s;
+        animation-name: tion;
+        animation-iteration-count: 1;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+        margin-top: -580px;
+    }
+
+    @keyframes tion {
+        100% {
+            margin-top: -100px;
+        }
+    }
+
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<body onload="loading()">
+    <div class="container">
+        <div id="dis"></div>
+        <h1>Dashboard</h1>
+        <table class="table table-striped-columns" id="display"></table>
+        <table class="table table-striped-columns" id="disp"></table>
+    </div>
+    <div id="come"></div>
+   
+    <script>
+        var get = JSON.parse(localStorage.getItem("localstudent"))
+        var userIndex = localStorage.setItem("currentUserIndex", index)
+        console.log(userIndex);
+        // console.log(gen);
+
+        `<b>Welcome,${get[index].FirstName}</p>`
+        function loading() {
+            display.innerHTML =`
+            <thead>
+                <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Password</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+            </tr>
+            </thead>`
+            for (let index = 0; index < get.length; index++) {
+                display.innerHTML += `
+                <tbody>
+                <tr>                    
+                <td>${[index + 1]}</td>
+                <td>${get[index].FirstName}</td>
+                <td>${get[index].LastName}</td>
+                <td>${get[index].Password}</td>
+                <td>${get[index].Email}</td>
+                <td><button onclick="del()" class="btn btn-danger">Delect</button>
+                <button onclick="edit(${index})" class="btn btn-warning">Edit</button></td>
+                </tr>
+            </tbody>
+                `
+            }
+        }
+
+        function del() {
+            get.splice(0, 1)
+            localStorage.setItem("localstudent", JSON.stringify(get))
+            loading()
+        }
+        function edit(take) {
+            var setback = localStorage.getItem("localstudent")
+            console.log(setback);
+            come.innerHTML = `
+            <center>
+                <div class="container" id="ani">
+                <div class="row">
+                <div class="col-6 bg-warning mx-auto mt-3">
+                <p>Edit Place</p>
+                <input type="text" class="form-control my-2" id="inp1" placeholder="FIRST NAME" value="${get[take].FirstName}"><br><br>
+                <input type="text" class="form-control my-2" id="inp2" placeholder="LAST NAME" value="${get[take].LastName}"><br><br>
+                <input type="text" class="form-control my-2" id="inp3" placeholder="PASSWORD" value="${get[take].Password}"><br><br>
+                <input type="text" class="form-control my-2" id="inp4" placeholder="EMAIL" value="${get[take].Email}"><br><br>
+                <button class="btn btn-success w-100 my-2" onclick="upd(${take})">Update</button>
+            </div>
+        </div>
+    </div>
+    </center>
+                `
+        }
+        function upd(take) {
+            var about = {
+                FirstName: inp1.value,
+                LastName: inp2.value,
+                Email: inp3.value,
+                Password: inp4.value
+            }
+            get.splice(take, 1, about)
+            loading()
+            localStorage.setItem("localstudent", JSON.stringify(get))
+            come.innerHTML = ""
+        }
+    </script>
+</body>
+
+</html>
